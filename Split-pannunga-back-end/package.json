@@ -1,0 +1,16 @@
+{
+  "name": "split-pannunga",
+  "version": "1.0.0",
+  "description": "Connecting NodeJs & PostgreSQL",
+  "main": "app.js",
+  "dependencies": {
+    "bcrypt": "^3.0.7",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "file-system": "^2.2.2",
+    "fs": "0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^7.8.2"
+  }
+}
