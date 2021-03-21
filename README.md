@@ -32,6 +32,7 @@ npm install
 ```
 
 ## Setup postgres Database and tables
+* Use `postgres` as username and password while installing postgres.
 Run the following commands from the pgAdmin Query tool.
 #### Create database
 ```
