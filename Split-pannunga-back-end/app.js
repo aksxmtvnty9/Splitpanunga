@@ -17,7 +17,7 @@
 const express = require('express');
 const { Client } = require('pg');
 const cors = require('cors')
-const connectionString = 'postgres://anush:anush@localhost:5432/test';
+const connectionString = 'postgres://postgres:postgres@localhost:5432/test';
 const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 const client = new Client({
@@ -56,6 +56,7 @@ app .get('/', function (req, res, next) {
 //post call for signup
 //hash the password for the current user
 function hashUserCredentials(userCredentials){
+	userCredentialsObj = [];
     for(var i in userCredentials){
         if(i == 2){
             // console.log(userCredentials[i])
@@ -72,6 +73,19 @@ function hashUserCredentials(userCredentials){
     userCredentialsObj.push("false")
     userCredentialsObj.push("false")
 }
+/*
+CREATE TABLE users (
+id serial PRIMARY KEY,
+name TEXT NOT NULL,
+email VARCHAR ( 255 ) UNIQUE NOT NULL,
+password VARCHAR ( 50 ) NOT NULL,
+mobile_number TEXT NOT NULL,
+status BOOLEAN,
+is_email_verified BOOLEAN,
+is_phone_verified BOOLEAN
+);
+
+*/
 //handle post call for sign up
 app.post('/post-call', function(req, res) {
     var userCredentials = req.body;
@@ -135,7 +149,22 @@ app.post('/post-call-login',function(req,res){
     });
 })
 
+/*
+CREATE TABLE payments (
+user_id INT NOT NULL,
+owe_id INT NOT NULL,
+amount REAL NOT NULL,
+created_at TIMESTAMP,
+description TEXT NOT NULL,
+PRIMARY KEY (user_id, owe_id),
+FOREIGN KEY (user_id)
+  REFERENCES users (id),
+FOREIGN KEY (owe_id)
+  REFERENCES users (id),
+);
 
+
+*/
 //add expense via modal box - to be modified
 app.post('/add-expense',async function(req,res){
     var date = new Date();
@@ -319,6 +348,17 @@ app.post('/expense-view',async function(req,res){
     // console.log(arr2)
 })
 //add payment
+/*
+CREATE TABLE paymentsDone (
+user_id INT NOT NULL,
+owe_id INT NOT NULL,
+amount REAL NOT NULL,
+FOREIGN KEY (user_id)
+  REFERENCES users (id),
+FOREIGN KEY (owe_id)
+  REFERENCES users (id),
+);
+*/
 app.post('/get-payment',async function(req,res){
     var paymentDetails = req.body;
     console.log(paymentDetails)
